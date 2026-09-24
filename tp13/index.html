@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Control del Taller</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #eeeeee;
+
+            background-color: #111315;
+
+            background-image:
+                linear-gradient(rgba(255, 193, 7, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 193, 7, 0.035) 1px, transparent 1px);
+
+            background-size: 42px 42px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px;
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .panel {
+            width: 100%;
+            max-width: 850px;
+
+            background: #1a1d20;
+
+            border: 1px solid #30353a;
+            border-radius: 18px;
+
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.55),
+                inset 0 1px 0 rgba(255, 255, 255, 0.03);
+
+            overflow: hidden;
+        }
+
+        /* BARRA SUPERIOR */
+        .barra-superior {
+            height: 52px;
+
+            background: #101214;
+
+            border-bottom: 1px solid #30353a;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 22px;
+        }
+
+        .luces {
+            display: flex;
+            gap: 8px;
+        }
+
+        .luz {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #444;
+        }
+
+        .luz.activa {
+            background: #ffc107;
+            box-shadow: 0 0 10px rgba(255, 193, 7, 0.8);
+        }
+
+        .estado {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #858b91;
+            text-transform: uppercase;
+        }
+
+        /* CONTENIDO */
+        .contenido {
+            padding: 42px;
+        }
+
+        .encabezado {
+            margin-bottom: 35px;
+        }
+
+        .etiqueta {
+            display: inline-block;
+
+            padding: 7px 11px;
+
+            border: 1px solid #4f555a;
+            border-radius: 5px;
+
+            font-size: 10px;
+            font-weight: bold;
+
+            letter-spacing: 2px;
+            color: #ffc107;
+
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: clamp(30px, 6vw, 48px);
+            line-height: 1;
+            margin-bottom: 12px;
+
+            letter-spacing: -1px;
+        }
+
+        .descripcion {
+            color: #8d949a;
+            line-height: 1.6;
+            max-width: 570px;
+        }
+
+        /* FORMULARIO */
+        .formulario {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .campo.completo {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #9aa0a6;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+
+            background: #111315;
+            color: #f2f2f2;
+
+            border: 1px solid #363b40;
+            border-radius: 9px;
+
+            padding: 15px 16px;
+
+            font-size: 15px;
+            outline: none;
+
+            transition: 0.25s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #ffc107;
+
+            box-shadow:
+                0 0 0 3px rgba(255, 193, 7, 0.08);
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        /* BOTONES */
+        .acciones {
+            display: flex;
+            gap: 12px;
+
+            margin-top: 28px;
+        }
+
+        button {
+            border: none;
+            border-radius: 9px;
+
+            padding: 14px 20px;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s,
+                background 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-registrar {
+            flex: 1;
+
+            background: #ffc107;
+            color: #181818;
+
+            box-shadow:
+                0 8px 20px rgba(255, 193, 7, 0.12);
+        }
+
+        .btn-registrar:hover {
+            background: #ffd04a;
+
+            box-shadow:
+                0 12px 25px rgba(255, 193, 7, 0.2);
+        }
+
+        .btn-normas {
+            flex: 1;
+
+            background: #292e33;
+            color: #eeeeee;
+
+            border: 1px solid #41474d;
+        }
+
+        .btn-normas:hover {
+            background: #343a40;
+        }
+
+        /* REGISTRO */
+        #registro {
+            display: none;
+
+            margin-top: 30px;
+
+            border: 1px solid #3b4146;
+            border-radius: 12px;
+
+            overflow: hidden;
+
+            background: #111315;
+        }
+
+        .registro-cabecera {
+            padding: 14px 18px;
+
+            background: #1c2023;
+
+            border-bottom: 1px solid #363b40;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .registro-cabecera span:first-child {
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        .indicador {
+            font-size: 10px;
+            color: #79d17c;
+            text-transform: uppercase;
+        }
+
+        .registro-datos {
+            padding: 20px;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .dato {
+            padding: 17px;
+
+            background: #191c1f;
+
+            border: 1px solid #2e3438;
+            border-radius: 8px;
+        }
+
+        .dato small {
+            display: block;
+
+            color: #727980;
+
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+
+            margin-bottom: 9px;
+        }
+
+        .dato strong {
+            display: block;
+
+            color: #eeeeee;
+            font-size: 16px;
+
+            word-break: break-word;
+        }
+
+        .registro-footer {
+            padding: 0 20px 20px;
+        }
+
+        .btn-borrar {
+            width: 100%;
+
+            background: transparent;
+            color: #e57373;
+
+            border: 1px solid #613f3f;
+        }
+
+        .btn-borrar:hover {
+            background: #291c1c;
+        }
+
+        /* PIE */
+        .pie {
+            margin-top: 30px;
+
+            display: flex;
+            justify-content: space-between;
+
+            font-size: 10px;
+            color: #5f666b;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 700px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .contenido {
+                padding: 28px 22px;
+            }
+
+            .formulario {
+                grid-template-columns: 1fr;
+            }
+
+            .campo.completo {
+                grid-column: auto;
+            }
+
+            .registro-datos {
+                grid-template-columns: 1fr;
+            }
+
+            .acciones {
+                flex-direction: column;
+            }
+
+            .pie {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="panel">
+
+        <div class="barra-superior">
+            <div class="luces">
+                <span class="luz activa"></span>
+                <span class="luz"></span>
+                <span class="luz"></span>
+            </div>
+
+            <div class="estado">
+                Sistema de registro · Online
+            </div>
+        </div>
+
+        <section class="contenido">
+
+            <header class="encabezado">
+
+                <span class="etiqueta">
+                    Taller / Inventario
+                </span>
+
+                <h1>
+                    Control de máquinas
+                </h1>
+
+                <p class="descripcion">
+                    Registrá las máquinas disponibles para el uso
+                    del taller y consultá sus horas de funcionamiento.
+                </p>
+
+            </header>
+
+            <section class="formulario">
+
+                <div class="campo completo">
+                    <label for="nombre">
+                        Identificación de la máquina
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nombre"
+                        placeholder="Ej: Taladro Bosch"
+                    >
+                </div>
+
+                <div class="campo">
+
+                    <label for="tipo">
+                        Tipo de máquina
+                    </label>
+
+                    <select id="tipo">
+
+                        <option value="">
+                            Seleccionar tipo
+                        </option>
+
+                        <option value="Herramienta eléctrica">
+                            Herramienta eléctrica
+                        </option>
+
+                        <option value="Impresora 3D">
+                            Impresora 3D
+                        </option>
+
+                        <option value="Máquina de soldar">
+                            Máquina de soldar
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="campo">
+
+                    <label for="horas">
+                        Horas de uso acumuladas
+                    </label>
+
+                    <input
+                        type="number"
+                        id="horas"
+                        placeholder="Ej: 125"
+                        min="0"
+                    >
+
+                </div>
+
+            </section>
+
+            <div class="acciones">
+
+                <button
+                    class="btn-registrar"
+                    onclick="registrarMaquina()"
+                >
+                    Registrar
+                </button>
+
+                <button
+                    class="btn-normas"
+                    onclick="cambiarPagina('normas.html')"
+                >
+                    Ver Normas
+                </button>
+
+            </div>
+
+            <!-- DIV OCULTO SOLICITADO POR LA CONSIGNA -->
+            <div id="registro">
+
+                <div class="registro-cabecera">
+
+                    <span>
+                        Registro generado
+                    </span>
+
+                    <span class="indicador">
+                        ● Máquina registrada
+                    </span>
+
+                </div>
+
+                <div class="registro-datos">
+
+                    <div class="dato">
+
+                        <small>
+                            Máquina
+                        </small>
+
+                        <strong id="mostrarNombre"></strong>
+
+                    </div>
+
+                    <div class="dato">
+
+                        <small>
+                            Tipo
+                        </small>
+
+                        <strong id="mostrarTipo"></strong>
+
+                    </div>
+
+                    <div class="dato">
+
+                        <small>
+                            Horas acumuladas
+                        </small>
+
+                        <strong id="mostrarHoras"></strong>
+
+                    </div>
+
+                </div>
+
+                <div class="registro-footer">
+
+                    <button
+                        class="btn-borrar"
+                        onclick="borrarRegistro()"
+                    >
+                        Borrar Registro
+                    </button>
+
+                </div>
+
+            </div>
+
+            <footer class="pie">
+
+                <span>
+                    Panel #TALLER-01
+                </span>
+
+                <span>
+                    Uso educativo
+                </span>
+
+            </footer>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

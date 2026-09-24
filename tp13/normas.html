@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Normas de Seguridad</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            color: #eeeeee;
+            background: #111315;
+
+            background-image:
+                linear-gradient(
+                    rgba(255, 193, 7, 0.035) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255, 193, 7, 0.035) 1px,
+                    transparent 1px
+                );
+
+            background-size: 42px 42px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px;
+        }
+
+        .contenedor {
+            width: 100%;
+            max-width: 850px;
+
+            background: #1a1d20;
+
+            border: 1px solid #30353a;
+            border-radius: 18px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.55);
+        }
+
+        .barra {
+            height: 52px;
+
+            background: #101214;
+
+            border-bottom: 1px solid #30353a;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 22px;
+        }
+
+        .simbolos {
+            display: flex;
+            gap: 8px;
+        }
+
+        .simbolos span {
+            width: 10px;
+            height: 10px;
+
+            border-radius: 50%;
+
+            background: #ffc107;
+        }
+
+        .codigo {
+            color: #777e84;
+
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .contenido {
+            padding: 45px;
+        }
+
+        .alerta {
+            width: 80px;
+            height: 80px;
+
+            margin-bottom: 25px;
+
+            background: #ffc107;
+
+            clip-path: polygon(
+                50% 0%,
+                100% 100%,
+                0% 100%
+            );
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: #171717;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .codigo-norma {
+            display: inline-block;
+
+            color: #ffc107;
+
+            border: 1px solid #4a5055;
+            border-radius: 4px;
+
+            padding: 6px 10px;
+
+            font-size: 10px;
+            font-weight: bold;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 14px;
+        }
+
+        h1 {
+            font-size: clamp(30px, 6vw, 48px);
+            line-height: 1.05;
+
+            margin-bottom: 15px;
+        }
+
+        .subtitulo {
+            max-width: 630px;
+
+            color: #8d949a;
+
+            line-height: 1.6;
+
+            margin-bottom: 35px;
+        }
+
+        /* NORMAS */
+
+        .normas {
+            display: grid;
+            gap: 14px;
+
+            counter-reset: normas;
+        }
+
+        .norma {
+            counter-increment: normas;
+
+            display: grid;
+            grid-template-columns: 58px 1fr;
+
+            background: #111315;
+
+            border: 1px solid #30353a;
+            border-radius: 11px;
+
+            overflow: hidden;
+        }
+
+        .numero {
+            background: #202428;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: #ffc107;
+
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .numero::before {
+            content: counter(normas, decimal-leading-zero);
+        }
+
+        .texto-norma {
+            padding: 20px;
+        }
+
+        .texto-norma strong {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 16px;
+        }
+
+        .texto-norma p {
+            color: #858c92;
+
+            line-height: 1.5;
+
+            font-size: 13px;
+        }
+
+        /* BOTÓN */
+
+        .volver {
+            width: 100%;
+
+            margin-top: 30px;
+
+            padding: 15px;
+
+            border: 1px solid #4b5156;
+            border-radius: 9px;
+
+            background: #292e33;
+
+            color: #eeeeee;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .volver:hover {
+            background: #ffc107;
+            color: #171717;
+
+            border-color: #ffc107;
+
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .contenido {
+                padding: 28px 20px;
+            }
+
+            .norma {
+                grid-template-columns: 45px 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="contenedor">
+
+        <div class="barra">
+
+            <div class="simbolos">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <span class="codigo">
+                Safety Protocol / 03
+            </span>
+
+        </div>
+
+        <section class="contenido">
+
+            <div class="alerta">
+                !
+            </div>
+
+            <span class="codigo-norma">
+                PROTOCOLO DE SEGURIDAD
+            </span>
+
+            <h1>
+                Normas de Seguridad del Taller
+            </h1>
+
+            <p class="subtitulo">
+                Antes de operar cualquier máquina, asegurate de conocer
+                las condiciones de uso y cumplir las normas de seguridad.
+            </p>
+
+            <div class="normas">
+
+                <div class="norma">
+
+                    <div class="numero"></div>
+
+                    <div class="texto-norma">
+
+                        <strong>
+                            Utilizar antiparras de seguridad
+                        </strong>
+
+                        <p>
+                            Protegé tus ojos utilizando antiparras
+                            durante las actividades realizadas con máquinas.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="norma">
+
+                    <div class="numero"></div>
+
+                    <div class="texto-norma">
+
+                        <strong>
+                            No utilizar máquinas sin supervisión
+                        </strong>
+
+                        <p>
+                            Las máquinas deben utilizarse únicamente
+                            bajo la supervisión correspondiente del taller.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="norma">
+
+                    <div class="numero"></div>
+
+                    <div class="texto-norma">
+
+                        <strong>
+                            Desconectar al finalizar
+                        </strong>
+
+                        <p>
+                            Al terminar el trabajo, desconectá la máquina
+                            de la fuente de alimentación.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button
+                class="volver"
+                onclick="cambiarPagina('index.html')"
+            >
+                ← Volver al Registro
+            </button>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
